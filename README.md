@@ -5,7 +5,9 @@ A Third Generation Facial Spontaneous Micro-Expression Database with Depth Infor
 
 ![image](https://github.com/jingtingEmmaLi/CAS-ME-3/blob/main/cas3cover.png)
 
-Part A: 100 subjects
+Part A: 100 subjects, 13 videos per subject, with labeled micro-expressions and macro-expression
+Part B: 116 subjects, 13 videos per subject, unlabeled
+Part C: 31 subjects, one 8 min video per subject, with labeled micro-expressions and macro-expression
 
 ## Reference
 J. Li et al., "CAS(ME)$^{3}$: A Third Generation Facial Spontaneous Micro-Expression Database with Depth Information and High Ecological Validity," in IEEE Transactions on Pattern Analysis and Machine Intelligence, doi: 10.1109/TPAMI.2022.3174895.
