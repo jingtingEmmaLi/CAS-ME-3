@@ -31,8 +31,9 @@ Micro-expression (ME) is a significant non-verbal communication clue that reveal
 
 ##  Exception 
 This folder mainly contains some exception information for the samples in the database.
-Users are welcome to contribute here, i.e., upload issues they encountered in using the database.
-For example, casme3_partA_error_list_ZhouJu.xlsx is the anomaly information of some micro-expression samples in Part A provided by Zhou Ju, a PhD student supervised by Professor Chen Tong of Southwest University.
+Users are welcome to contribute here, i.e., upload issues encountered in using the database.
+
+For example, casme3_partA_error_list_ZhouJu.xlsx is the anomaly information of some micro-expression samples in Part A provided by **Zhou Ju**, a PhD student supervised by Professor Chen Tong of Southwest University.
 
 ## Supplementary files
 This folder includes the supplementary files such as the self report of the subjects per emotional stimulus video. 
