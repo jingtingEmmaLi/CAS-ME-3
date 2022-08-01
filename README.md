@@ -6,7 +6,9 @@ A Third Generation Facial Spontaneous Micro-Expression Database with Depth Infor
 ![image](https://github.com/jingtingEmmaLi/CAS-ME-3/blob/main/cas3cover.png)
 
 Part A: 100 subjects, 13 videos per subject, with labeled micro-expressions and macro-expression
+
 Part B: 116 subjects, 13 videos per subject, unlabeled
+
 Part C: 31 subjects, one 8 min video per subject, with labeled micro-expressions and macro-expression
 
 ## Reference
@@ -34,7 +36,10 @@ For example, casme3_partA_error_list_ZhouJu.xlsx is the anomaly information of s
 
 ## Supplementary files
 This folder includes the supplementary files such as the self report of the subjects per emotional stimulus video. 
+## More 
+We will further improve the annotation of the database, add relevant materials, and notify the corresponding updates by email.
 
+If you have any concerns or suggestions, such as what information you would like us to provide, please do not hesitate to let us know.
 ## Contact
 Questions and comments can be sent to:
 
