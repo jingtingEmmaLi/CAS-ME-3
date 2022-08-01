@@ -13,6 +13,7 @@ Part C: 31 subjects, one 8 min video per subject, with labeled micro-expressions
 
 ## Reference
 J. Li et al., "CAS(ME)$^{3}$: A Third Generation Facial Spontaneous Micro-Expression Database with Depth Information and High Ecological Validity," in IEEE Transactions on Pattern Analysis and Machine Intelligence, doi: 10.1109/TPAMI.2022.3174895.
+
 ## Application website
 http://casme.psych.ac.cn/casme/e4
 
@@ -37,10 +38,12 @@ For example, casme3_partA_error_list_ZhouJu.xlsx is the anomaly information of s
 
 ## Supplementary files
 This folder includes the supplementary files such as the self report of the subjects per emotional stimulus video. 
+
 ## More 
 We will further improve the annotation of the database, add relevant materials, and notify the corresponding updates by email.
 
 If you have any concerns or suggestions, such as what information you would like us to provide, please do not hesitate to let us know.
+
 ## Contact
 Questions and comments can be sent to:
 
