@@ -3,6 +3,8 @@
 
 A Third Generation Facial Spontaneous Micro-Expression Database with Depth Information and High Ecological Validity
 
+Copyright: Institute of Psychology, Chinese Academy of Siences
+
 ![image](https://github.com/jingtingEmmaLi/CAS-ME-3/blob/main/cas3cover.png)
 
 Part A: 100 subjects, 13 videos per subject, with labeled micro-expressions and macro-expression
