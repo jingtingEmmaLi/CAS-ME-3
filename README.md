@@ -42,7 +42,7 @@ For example, casme3_partA_error_list_ZhouJu.xlsx is the anomaly information of s
 This folder includes the supplementary files such as the self report of the subjects per emotional stimulus video. 
 
 ## More 
-We will further improve the annotation of the database, add relevant materials, and notify the corresponding updates by email.
+We will further improve the annotation of the database, add relevant materials.
 
 If you have any concerns or suggestions, such as what information you would like us to provide, please do not hesitate to let us know.
 
