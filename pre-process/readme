@@ -1,0 +1,2 @@
+preprocess voice signal: pcm -> mat, matlab
+extract EDA data from physiological txt file: python
