@@ -1,4 +1,8 @@
-depth flow computation  Reference:
+1.the folder of RGBD_tensor construct the input(in folder input) for depth computation.
+
+
+
+2. depth flow computation  Reference:
 Lucas, B. D., Kanade, T., 1981. An iterative image registration technique with an application to stereo vision. In: Proceedings of the 7th international joint conference on Artificial intelligence - Volume 2. Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, pp. 674-679.
 
 Author: Mohammad Mustafa
