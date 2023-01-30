@@ -32,7 +32,7 @@ full_crop.drop(labels=777, inplace=True)
 
 
 def save_mat(ro, ra, do, da, x, y, w, h, save_path):
-    # 先对rgb图和depth图按裁剪信息进行裁剪
+    # crop images of rgb and depth based on the defaut setting
     crop_depth_onset = do[y:y+h, x:x+w]
     crop_depth_apex = da[y:y+h, x:x+w]
     rgb_gray_onset = cv2.cvtColor(ro, cv2.COLOR_BGR2GRAY)
@@ -49,20 +49,19 @@ def save_mat(ro, ra, do, da, x, y, w, h, save_path):
     normaldo = crop_depth_onset[(crop_depth_onset >= mean_do - 3 * std_do) * (crop_depth_onset <= mean_do + 3 * std_do)]
     normalda = crop_depth_apex[(crop_depth_apex >= mean_da - 3 * std_da) * (crop_depth_apex <= mean_da + 3 * std_da)]
 
-    print('原裁剪矩阵最大值：', np.max(crop_depth_onset), np.max(crop_depth_apex))
-    print('原裁剪矩阵最小值：', np.min(crop_depth_onset), np.min(crop_depth_apex))
-    print('原裁剪矩阵最小非零值：', np.min(crop_depth_onset[crop_depth_onset > 0]), np.min(crop_depth_apex[crop_depth_apex > 0]))
-    print('原裁剪矩阵平均值：', mean_do, mean_da)
-    print('原裁剪矩阵标准差：', std_do, std_da)
-    # print('标准化矩阵最大值：', np.max(normaldo), np.max(normalda))
+    print('max value in original crop matrix：', np.max(crop_depth_onset), np.max(crop_depth_apex))
+    print('min value in original crop matrix：', np.min(crop_depth_onset), np.min(crop_depth_apex))
+    print('non zero min value in original crop matrix：', np.min(crop_depth_onset[crop_depth_onset > 0]), np.min(crop_depth_apex[crop_depth_apex > 0]))
+    print('average value in original crop matrix ：', mean_do, mean_da)
+    print('std value in original crop matrix：', std_do, std_da)
+    # print('max in normalized matrix：', np.max(normaldo), np.max(normalda))
     max_depth = max(np.max(normaldo), np.max(normalda))
     min_depth = min(np.min(crop_depth_onset[crop_depth_onset > 0]), np.min(crop_depth_apex[crop_depth_apex > 0]))
 
-    print('normal化矩阵最大值：', max_depth)
-    print('normal化矩阵最小值：', min_depth)
+   
 
     new_max_depth = max(np.max(normaldo[normaldo < min_depth + 400]), np.max(normalda[normalda < min_depth + 400]))
-    print('normal化矩阵new最大值：', new_max_depth)
+   
 
     if max_depth < min_depth + 400:
         width = crop_rgb_gray_onset.shape[0]
@@ -90,14 +89,14 @@ def save_mat(ro, ra, do, da, x, y, w, h, save_path):
                         zz2 = 0
                 threed_img_onset[ii, jj, zz1] = crop_rgb_gray_onset[ii, jj]
                 threed_img_apex[ii, jj, zz2] = crop_rgb_gray_apex[ii, jj]
-        print(f'开始保存 {save_path}', end='\t')
+        print(f'begin to save {save_path}', end='\t')
         io.savemat(save_path, {'onset': threed_img_onset, 'apex': threed_img_apex})
 
 
 
 
 def first():
-    # 遍历excel
+    # Iterate through the excel
 
     for idx in range(excel_data.shape[0]):
 
@@ -117,58 +116,58 @@ def first():
             rgb_apex_path = f'{RGB_dir}/{current_subject}/{current_filename}/color/{current_apex}.jpg'
             depth_onset_path = f'{depth_dir}/{current_subject}/{current_filename}/depth/{current_onset}.png'
             depth_apex_path = f'{depth_dir}/{current_subject}/{current_filename}/depth/{current_apex}.png'
-            # # 处理不规范命名的subject
+            # # Handling irregularly named subjects
             # if current_subject in special_subject:
             #     current_subject_alter = current_subject.replace('.', '')
             #     depth_onset_path = f'{depth_dir}/{current_subject_alter}/{current_filename}/depth/{current_onset}.png'
             #     depth_apex_path = f'{depth_dir}/{current_subject_alter}/{current_filename}/depth/{current_apex}.png'
 
             #
-            # 首先获取起始帧和顶帧的RGB图片以及depth图片的路径信息
+            # First get the path of onset and apex frames' RGB and depth
             depth_onset_path_alter = f'{depth_dir}/{current_subject}/{current_filename}/{current_onset}.png'
             depth_apex_path_alter = f'{depth_dir}/{current_subject}/{current_filename}/{current_apex}.png'
 
-            # 如果路径信息不正确，则记录日志，并记录错误信息
+            # If the path information is incorrect, record the log
             if not os.path.exists(rgb_onset_path):
-                print(f'{current_subject} {current_filename} {current_onset} RGB起始帧路径错误')
+                print(f'{current_subject} {current_filename} {current_onset} RGB-onset path error')
                 with open('./depth_feature_error6.txt', 'a') as f:
-                    f.write(f'{current_subject} {current_filename} {current_onset} RGB起始帧路径错误\n')
+                    f.write(f'{current_subject} {current_filename} {current_onset} RGB-onset path error\n')
                 f.close()
                 continue
             if not os.path.exists(rgb_apex_path):
-                print(f'{current_subject} {current_filename} {current_onset} RGB顶帧路径错误')
+                print(f'{current_subject} {current_filename} {current_onset} RGB-apex path error')
                 with open('./depth_feature_error6.txt', 'a') as f:
-                    f.write(f'{current_subject} {current_filename} {current_onset} RGB顶帧路径错误\n')
+                    f.write(f'{current_subject} {current_filename} {current_onset} RGB-apex path error\n')
                 f.close()
                 continue
             if not os.path.exists(depth_onset_path):
                 depth_onset_path = depth_onset_path_alter
                 if not os.path.exists(depth_onset_path):
-                    print(f'{current_subject} {current_filename} {current_onset} depth起始帧路径错误')
+                    print(f'{current_subject} {current_filename} {current_onset} depth-onset path error')
                     with open('./depth_feature_error6.txt', 'a') as f:
-                        f.write(f'{current_subject} {current_filename} {current_onset} depth起始帧路径错误\n')
+                        f.write(f'{current_subject} {current_filename} {current_onset} depth-onset path error\n')
                     f.close()
                     continue
             if not os.path.exists(depth_apex_path):
                 depth_apex_path = depth_apex_path_alter
                 if not os.path.exists(depth_apex_path):
-                    print(f'{current_subject} {current_filename} {current_onset} depth顶帧路径错误')
+                    print(f'{current_subject} {current_filename} {current_onset} depth-apex path error')
                     with open('./depth_feature_error6.txt', 'a') as f:
-                        f.write(f'{current_subject} {current_filename} {current_onset} depth顶帧路径错误\n')
+                        f.write(f'{current_subject} {current_filename} {current_onset} depth-apex path error\n')
                     f.close()
                     continue
 
-            # 如果起始帧在顶帧之前，则记录日志，并记录错误原因
+            # If the apex frame is before the onset frame, record a log with the cause of the error
             if current_onset >= current_apex:
-                print(f'{current_subject} {current_filename} {current_onset} 顶帧位置错误')
+                print(f'{current_subject} {current_filename} {current_onset} apex location error')
                 with open('./depth_feature_error6', 'a') as f:
-                    f.write(f'{current_subject} {current_filename} {current_onset} 顶帧位置错误\n')
+                    f.write(f'{current_subject} {current_filename} {current_onset} apex location error\n')
                 f.close()
                 continue
 
             # continue
 
-            # 信息均无误的境况下， 开始获取裁剪框的信息
+            # If all the information is correct, start getting the information of the crop box
             crop_info = full_crop.loc[(full_crop['Subject']==current_subject) & (full_crop['Filename']==current_filename) & (full_crop['Onset']==current_onset)]
             # print(crop_info)
 
@@ -189,7 +188,7 @@ def first():
             with open('./depth_success_info6.txt', 'a') as f:
                 f.write(f'{current_subject} {current_filename} {current_onset} {save_target_path}\n')
             f.close()
-            print('保存成功')
+            print('Save successfully')
 
 
 
@@ -197,14 +196,14 @@ def process_error():
     error_info = pd.read_csv('./depth_feature_error5.txt', header=None, sep=' ', encoding='utf-8', engine='python')
     error_info.columns = ['Subject', 'Filename', 'Onset', 'Error_type']
     groups = error_info.groupby('Error_type')
-    depth_onset_error = groups.get_group('depth起始帧路径错误').reset_index()
-    rgb_apex_error = groups.get_group('顶帧位置错误').reset_index()
-    rgb_onset_error = groups.get_group('RGB起始帧路径错误').reset_index()
+    depth_onset_error = groups.get_group('depth-onset path error').reset_index()
+    rgb_apex_error = groups.get_group('apex location error').reset_index()
+    rgb_onset_error = groups.get_group('RGB-onset path error').reset_index()
 
     rgb_onset_excel = pd.merge(left=excel_data, right=rgb_onset_error, on=['Subject', 'Filename', 'Onset'])
 
 
-    # 处理顶帧位置错误
+    # handling apex location error
     rgb_apex_excel = pd.merge(left=excel_data, right=rgb_apex_error, on=['Subject', 'Filename', 'Onset'])
     # print(rgb_apex_excel.loc[0,'Onset'])
     for i in range(rgb_apex_excel.shape[0]):
@@ -213,7 +212,7 @@ def process_error():
         con = rgb_apex_excel.loc[i, 'Onset']
         cap = rgb_apex_excel.loc[i, 'Apex']
         cof = rgb_apex_excel.loc[i, 'Offset']
-        # onset 和 apex相等, 将顶帧设为均值
+        # onset and apex have the same location, the location of apex is set to be the average value
 
         print('*'*50)
         print(f'current task: {cs}/{cf}/{con}')
@@ -221,22 +220,22 @@ def process_error():
         if os.path.exists('./depth_success_info5_1.txt'):
             success = pd.read_csv('./depth_success_info5_1.txt', header=None, sep=' ', engine='python', encoding='utf-8',names=['Subject', 'Filename', 'Onset', 'Target'])
             if not success.loc[(success['Subject'] == cs) & (success['Filename'] == cf) & (success['Onset'] == min(con, cap, cof))].empty:
-                print('已完成，开始下一个样本')
+                print('Completed, start the next sample')
                 continue
 
         alter_apex = -1
         if con == cap:
             alter_apex = (con + cof) // 2
-            # 检测是否存在此帧
+            # Detects the presence of this frame
             alter_apex_path = '{}/{}/{}/color/{}.jpg'.format(RGB_dir, cs, cf, alter_apex)
-            # 如果不存在此顶帧， 则向后寻找最近帧
+            # If the top frame does not exist, search backwards for the nearest frame
             while not os.path.exists(alter_apex_path):
                 alter_apex += 1
                 if alter_apex == cof:
                     break
                 alter_apex_path = '{}/{}/{}/color/{}.jpg'.format(RGB_dir, cs, cf, alter_apex)
 
-            # 向后寻找没有找到，则向前寻找
+            # If not found by searching backwards, search forwards
             if alter_apex == cof:
                 alter_apex = (con + cof) // 2 -1
                 alter_apex_path = '{}/{}/{}/color/{}.jpg'.format(RGB_dir, cs, cf, alter_apex)
@@ -246,11 +245,11 @@ def process_error():
                         break
                     alter_apex_path = '{}/{}/{}/color/{}.jpg'.format(RGB_dir, cs, cf, alter_apex)
 
-            # 判断当前帧是否处于起始帧和终止帧之间
+            # Determine if the current frame is between the onset frame and the offset frame
             if not con < alter_apex < cof:
                 with open('./depth_error_5_1.txt', 'a') as f:
-                    print('{}/{}/{} 顶帧错误'.format(cs, cf, con))
-                    f.write('{}/{}/{} 顶帧错误\n'.format(cs, cf, con))
+                    print('{}/{}/{} apex error'.format(cs, cf, con))
+                    f.write('{}/{}/{} apex error\n'.format(cs, cf, con))
                 f.close()
                 continue
 
@@ -264,7 +263,7 @@ def process_error():
         rgb_ap_path = f'{RGB_dir}/{cs}/{cf}/color/{alter_apex}.jpg'
         depth_on_path = f'{depth_dir}/{cs}/{cf}/depth/{con}.png'
         depth_ap_path = f'{depth_dir}/{cs}/{cf}/depth/{cap}.png'
-        # 处理不规范命名的subject
+        # Handling irregularly named subjects
         # if cs in special_subject:
         #     current_subject_alter = cs.replace('.', '')
         #     depth_on_path = f'{depth_dir}/{current_subject_alter}/{cf}/depth/{con}.png'
@@ -274,33 +273,33 @@ def process_error():
         depth_ap_path_alter = f'{depth_dir}/{cs}/{cf}/{cap}.png'
 
 
-        # 如果路径信息不正确，则记录日志，并记录错误信息
+        # If the path information is incorrect, record the log
         if not os.path.exists(rgb_on_path):
-            print(f'{cs} {cf} {con} RGB起始帧路径错误')
+            print(f'{cs} {cf} {con} RGB-onset path error')
             with open('./depth_error_5_1.txt', 'a') as f:
-                f.write(f'{cs} {cf} {con} RGB起始帧路径错误\n')
+                f.write(f'{cs} {cf} {con} RGB-onset path error\n')
             f.close()
             continue
         if not os.path.exists(rgb_ap_path):
-            print(f'{cs} {cf} {con} RGB顶帧路径错误')
+            print(f'{cs} {cf} {con} RGB-apex path error')
             with open('./depth_error_5_1.txt', 'a') as f:
-                f.write(f'{cs} {cf} {con} RGB顶帧路径错误\n')
+                f.write(f'{cs} {cf} {con} RGB-apex path error\n')
             f.close()
             continue
         if not os.path.exists(depth_on_path):
             depth_on_path = depth_on_path_alter
             if not os.path.exists(depth_on_path):
-                print(f'{cs} {cf} {con} depth起始帧路径错误')
+                print(f'{cs} {cf} {con} depth-onset path error')
                 with open('./depth_error_5_1.txt', 'a') as f:
-                    f.write(f'{cs} {cf} {con} depth起始帧路径错误\n')
+                    f.write(f'{cs} {cf} {con} depth-onset path error\n')
                 f.close()
                 continue
         if not os.path.exists(depth_ap_path):
             depth_ap_path = depth_ap_path_alter
             if not os.path.exists(depth_ap_path):
-                print(f'{cs} {cf} {con} depth顶帧路径错误')
+                print(f'{cs} {cf} {con} depth-apex location error')
                 with open('./depth_error_5_1.txt', 'a') as f:
-                    f.write(f'{cs} {cf} {con} depth顶帧路径错误\n')
+                    f.write(f'{cs} {cf} {con} depth-apex location error\n')
                 f.close()
                 continue
 
@@ -321,13 +320,13 @@ def process_error():
         with open('./depth_success_info6.txt', 'a') as f:
             f.write(f'{cs} {cf} {con} {save_target_path}\n')
         f.close()
-        print('保存成功')
+        print('Save successfully')
 
 
 if __name__ == '__main__':
     #first()
     #process_error()
-    # 处理spNO.216首帧和顶帧为0的情况，将起始帧设为1，顶帧设为12
+    # Handle the case of spNO.216 onset and apex frame is 0, set the onset frame to 1 and the apex frame to 12
     ro_path = f'{RGB_dir}/spNO.216/e/color/1.jpg'
     ra_path = f'{RGB_dir}/spNO.216/e/color/12.jpg'
     do_path = f'{depth_dir}/spNO.216/e/1.png'
@@ -343,7 +342,7 @@ if __name__ == '__main__':
     with open('./depth_success_info6.txt', 'a') as f:
         f.write(f'spNO.216 e 0 {sp}\n')
     f.close()
-    print('保存成功')
+    print('Save successfully')
 
 
 
