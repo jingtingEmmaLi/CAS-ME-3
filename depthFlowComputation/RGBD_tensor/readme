@@ -1,0 +1,2 @@
+construct the RGBD tensor from RGB image and depth image 
+with the extreme values elimination
