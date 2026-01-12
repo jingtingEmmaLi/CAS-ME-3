@@ -19,7 +19,7 @@ J. Li et al., "CAS(ME)$^{3}$: A Third Generation Facial Spontaneous Micro-Expres
 ## Application website
 http://casme.psych.ac.cn/casme/e4 
 
-Due to a severe server issue that we are currently unable to resolve in the short term, our standard database application system is temporarily unavailable.
+【update】Due to a severe server issue that we are currently unable to resolve in the short term, our standard database application system is temporarily unavailable.
 To ensure your request is still processed without significant delay, please submit your application through the following link instead:
 https://melabipcas.github.io/melab/en/databases.html
 
